@@ -6,36 +6,62 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     weak var asteroid: CCNode?
     weak var planet: CCNode!
     weak var physicsWorld: CCPhysicsNode!
+    weak var
     
     func didLoadFromCCB()
     {
         userInteractionEnabled = true
         
-        physicsWorld.debugDraw = true
+       // physicsWorld.debugDraw = true
         physicsWorld.collisionDelegate = self
+
+        self.schedule("createNewAsteroidAndPosition", interval: 2.0)
+    }
+    
+    func createNewAsteroidAndPosition()
+    {
+        var asteroidX = CCBReader.load("Asteroid") as! Asteroid
+        asteroidX.randomPositionLeft()
+        physicsWorld.addChild(asteroidX)
         
-        //var diffPosition = ccpSub(planet.position,asteroid.position)
-        //var direction    = ccpNormalize(diffPosition)
+        var asteroidY = CCBReader.load("Asteroid") as! Asteroid
+        asteroidY.randomPositionRight()
+        physicsWorld.addChild(asteroidY)
         
-        //asteroid.physicsBody.applyImpulse(ccpMult(direction,50))
-        //asteroid.physicsBody.applyImpulse(ccp(100,0), atLocalPoint: ccp(0,0))
+        var asteroidZ = CCBReader.load("Asteroid") as! Asteroid
+        asteroidY.randomPositionTop()
+        physicsWorld.addChild(asteroidZ)
     }
 
     override func update(delta: CCTime)
     {
-        if let asteroid = asteroid {
-            var diffPosition = ccpSub(planet.position, asteroid.position)
-            var direction    = ccpNormalize(diffPosition)
-            //asteroid.physicsBody.applyForce(ccpMult(direction,500))
+        
+        for childNode in physicsWorld.children
+        {
+            if childNode is Asteroid
+            {
+                let asteroid:Asteroid = childNode as! Asteroid
+                asteroid.appliedForceInDirection(planet.position)
+            }
+            
         }
+
     }
     
     
-    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, asteroid:CCNode!, planet:CCNode!) -> Bool
+    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, asteroid:Asteroid!, planet:CCNode!) -> Bool
     {
         println("asteroid collided with planet")
         physicsWorld.removeChild(asteroid)
-        //CallBlock(removeAsteroid(asteroid))
+       
+        return true
+    }
+    
+    func ccPhysicsCollisionDeathRight(pair: CCPhysicsCollisionPair!, asteroid:Asteroid!, deathRight:CCColorNode!) -> Bool
+    {
+        println("asteroid off screen `")
+        physicsWorld.removeChild(asteroid)
+        
         return true
     }
     
@@ -53,7 +79,8 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     }
     
     //MARK:- Buttons
-    func restart() {
+    func restart()
+    {
         let gameplayScene = CCBReader.loadAsScene("MainScene")
         CCDirector.sharedDirector().replaceScene(gameplayScene)
     }
