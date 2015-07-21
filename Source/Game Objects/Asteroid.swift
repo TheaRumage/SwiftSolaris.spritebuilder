@@ -32,25 +32,8 @@ class Asteroid: CCSprite {
             var direction    = ccpNormalize(diffPosition)
             physicsBody.applyForce(ccpMult(direction,100))
         
-        if self.leftScreen(self.position) == true
-        {
-            parent.removeChild(self)
-            println("Asteroid left scene")
-        }
     }
-    
-    func leftScreen(point:CGPoint) -> Bool
-    {
-        if point != parent.position
-        {
-            return true
-        }
-        else
-        {
-          return false
-        }
-    }
-    
+        
     func randomPositionLeft()
     {
         var rangeX = Int(CGFloat(arc4random_uniform(70)) + contentSizeInPoints.width/2)

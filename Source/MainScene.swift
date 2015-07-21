@@ -6,7 +6,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     weak var asteroid: CCNode?
     weak var planet: CCNode!
     weak var physicsWorld: CCPhysicsNode!
-    weak var
+    weak var deathLeft: CCNodeColor!
+    weak var deathTop:CCNodeColor!
+    weak var deathRight:CCNodeColor!
     
     func didLoadFromCCB()
     {
@@ -57,9 +59,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         return true
     }
     
-    func ccPhysicsCollisionDeathRight(pair: CCPhysicsCollisionPair!, asteroid:Asteroid!, deathRight:CCColorNode!) -> Bool
+    func ccPhysicsCollisionDeathRight(pair: CCPhysicsCollisionPair!, asteroid:Asteroid!, deathRight:CCNodeColor!) -> Bool
     {
-        println("asteroid off screen `")
+        println("asteroid off screen")
         physicsWorld.removeChild(asteroid)
         
         return true
