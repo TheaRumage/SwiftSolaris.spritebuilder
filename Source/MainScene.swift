@@ -23,7 +23,8 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         }
     }
 
-
+    // Asteroid spawn time
+    var interval:Double = 3.0
     
     //Lives
     weak var starOne: CCNode!
@@ -47,9 +48,10 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
 
         if planet.parent == physicsWorld
         {
-            self.schedule("createNewAsteroidAndPosition", interval: 3.0)
+            self.schedule("createNewAsteroidAndPosition", interval: interval)
         }
     }
+    
     
     func createNewAsteroidAndPosition()
     {
@@ -70,6 +72,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
                 }
 
             }
+        
     }
     
     func destroyAsteroids() {
@@ -172,6 +175,8 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         {
             score = score + 10
             
+            
+            
             println("Asteroid killed")
 
             physicsWorld.space.addPostStepBlock({ () -> Void in
@@ -183,21 +188,19 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     }
     
     // Asteroid flicked to asteroid death
-    //func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, asteroidFlicked:Asteroid!, asteroidIncoming:CCNode!, ) -> Bool
-//    {
-//        if asteroidFlicked.isTouched == true
-//        {
-//            score = score + 20
-//            
-//            println("Asteroid killed")
-//            
-//            physicsWorld.space.addPostStepBlock({ () -> Void in
-//                asteroid.removeFromParent()
-//                }, key: asteroid)
-//        }
-//        
-//        return false
-//    }
+    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, asteroidFlicked:Asteroid!, asteroidIncoming:CCNode! ) -> Bool
+    {
+        if asteroidFlicked.isTouched == true
+        {
+            score = score + 5
+            
+            physicsWorld.space.addPostStepBlock({ () -> Void in
+                asteroidIncoming.removeFromParent()
+                }, key: asteroidIncoming)
+        }
+        
+        return false
+    }
     
     func removeAsteroid(asteroid:CCNode!)
     {
