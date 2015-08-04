@@ -1,8 +1,15 @@
-import Foundation
+//
+//  IceAsteroid.swift
+//  SwiftSolaris
+//
+//  Created by Thea Jensvold-Rumage on 7/28/15.
+//  Copyright (c) 2015 Apportable. All rights reserved.
+//
 
-class Asteroid: CCSprite
+import UIKit
+
+class IceAsteroid: CCSprite
 {
-    
     var isTouched = false
     var touchDirection = CGPointZero
     let spawningAtPercentOfScreen: CGFloat = 0.33
@@ -58,15 +65,15 @@ class Asteroid: CCSprite
         let randomOffset = random() % Int(percentInPoints)
         switch (placementSide)
         {
-        //Left edge
+            //Left edge
         case 0:
             x = -contentSize.width
             y = screenSize.height - CGFloat(randomOffset)
-        //Top edge
+            //Top edge
         case 1:
             x = CGFloat(random()) % screenSize.height
             y = screenSize.height + contentSize.height
-        //Right edge
+            //Right edge
         case 2:
             x = screenSize.width + contentSize.width
             y = screenSize.height - CGFloat(randomOffset)
@@ -78,7 +85,5 @@ class Asteroid: CCSprite
         position.y = y
         
     }
-
-    
-    
+ 
 }

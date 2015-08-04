@@ -2,29 +2,56 @@ import Foundation
 
 class MainScene: CCNode, CCPhysicsCollisionDelegate
 {
-    
+    // Main objects
     weak var asteroid: CCNode?
     weak var planet: CCNode!
+    weak var blueElement:Gem!
+    
+    var isTouched = false
+    
+    //Physics Node
     weak var physicsWorld: CCPhysicsNode!
     
     //Score
     weak var scoreLabel:CCLabelTTF!
-    
     weak var scoreTitle:CCLabelTTF!
     weak var finalScoreLabel: CCLabelTTF!
-    
     weak var highScore:CCLabelTTF!
     weak var highScoreTitle:CCLabelTTF!
     
-    var score:Int = 0 {
-        didSet {
+    // Gem Labels
+    weak var blueGemCount:CCLabelTTF!
+    weak var greenGemCount:CCLabelTTF!
+    
+    // Planet shield
+    weak var shield:Shield!
+    
+    var blueGems:Int = 0
+    {
+        didSet
+        {
+            blueGemCount.string = String(blueGems)
+        }
+    }
+    var greenGems:Int = 0
+    {
+        didSet
+        {
+            greenGemCount.string = String(greenGems)
+        }
+    }
+    
+    var score:Int = 0
+    {
+        didSet
+        {
             scoreLabel.string = String(score)
             finalScoreLabel.string = String(score)
         }
     }
-
+    
     // Asteroid spawn time
-    var interval:Double = 3.0
+    var interval:Double = 1.0
     
     //Lives
     weak var starOne: CCNode!
@@ -36,16 +63,16 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     // Death nodes
     weak var death:CCNode!
     
-    // Restart button
+    // Buttons
     weak var restartButton: CCButton!
+    weak var pauseButton:CCButton!
     
     func didLoadFromCCB()
     {
         userInteractionEnabled = true
         
-       // physicsWorld.debugDraw = true
         physicsWorld.collisionDelegate = self
-
+        
         if planet.parent == physicsWorld
         {
             self.schedule("createNewAsteroidAndPosition", interval: interval)
@@ -53,27 +80,49 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     }
     
     
+    
     func createNewAsteroidAndPosition()
     {
         var asteroidX = CCBReader.load("Asteroid") as! Asteroid
         asteroidX.placeAsteroid()
         physicsWorld.addChild(asteroidX)
-
-    }
-
-    override func update(delta: CCTime)
-    {
-            for childNode in physicsWorld.children
-            {
-                if childNode is Asteroid
-                {
-                    let asteroid:Asteroid = childNode as! Asteroid
-                    asteroid.appliedForceInDirection(planet.positionInPoints)
-                }
-
-            }
         
     }
+    
+    
+    override func update(delta: CCTime)
+    {
+        for childNode in physicsWorld.children
+        {
+            if childNode is Asteroid
+            {
+                let asteroid:Asteroid = childNode as! Asteroid
+                asteroid.appliedForceInDirection(planet.positionInPoints)
+            }
+            
+        }
+        
+        if blueGems == 10
+        {
+            blueGems = blueGems - 10
+            shield.activeShield()
+            
+        }
+        
+        if greenGems == 10
+        {
+            greenGems = greenGems - 10
+            spawnSpaceShips()
+        }
+        
+    }
+    // MARK:- Powerups
+    func spawnSpaceShips()
+    {
+        let spaceship = CCBReader.load("Spaceship")
+        let screenSize = CCDirector.sharedDirector().viewSize()
+    }
+    
     
     func destroyAsteroids() {
         for childNode in physicsWorld.children
@@ -84,12 +133,38 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
                 
                 physicsWorld.space.addPostStepBlock({ () -> Void in
                     asteroid.removeFromParent()
-                }, key: asteroid)
+                    }, key: asteroid)
             }
             
         }
     }
     
+    func blueGemButton()
+    {
+        if blueGems >= 10
+        {
+            shield.activeShield()
+        }
+
+    }
+    
+    func destroyGems()
+    {
+        for childNode in physicsWorld.children
+        {
+            if childNode is Gem
+            {
+                let gem:Gem = childNode as! Gem
+                
+                physicsWorld.space.addPostStepBlock({ () -> Void in
+                    gem.removeFromParent()
+                    }, key:gem)
+
+            }
+        }
+    }
+    
+    //MARK:- Physics
     func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, asteroid:Asteroid!, planet:CCNode!) -> Bool
     {
         
@@ -105,44 +180,46 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         //Shake
         physicsWorld.space.addPostStepBlock({ () -> Void in
             planet.animationManager.runAnimationsForSequenceNamed("Shake")
-        }, key: planet)
+            }, key: planet)
         
         
         if asteroidCollision == 1
         {
-           if starOne != nil
-           {
-            starOne.removeFromParent()
-           }
+            if starOne != nil
+            {
+                starOne.removeFromParent()
+            }
         }
         
         if asteroidCollision == 2
         {
             if starTwo != nil
             {
-               starTwo.removeFromParent()
+                starTwo.removeFromParent()
             }
-           
+            
         }
-
+        
         if asteroidCollision == 3
         {
-           self.unschedule("createNewAsteroidAndPosition")
-           
+            self.unschedule("createNewAsteroidAndPosition")
+            
             if starThree != nil
             {
                 starThree.removeFromParent()
             }
             
-           let explosion = CCBReader.load("PlanetExplosion") as! CCParticleSystem
-           explosion.autoRemoveOnFinish = true;
-           explosion.position = planet.positionInPoints;
-           planet.parent.addChild(explosion)
+            let explosion = CCBReader.load("PlanetExplosion") as! CCParticleSystem
+            explosion.autoRemoveOnFinish = true;
+            explosion.position = planet.positionInPoints;
+            planet.parent.addChild(explosion)
             
             physicsWorld.space.addPostStepBlock({ () -> Void in
+                self.shield.removeFromParent()
                 planet.removeFromParent()
                 self.destroyAsteroids()
-            }, key: "asteroid")
+                self.destroyGems()
+                }, key: "asteroid")
             
             // Final screen menu
             restartButton.visible = true
@@ -161,7 +238,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
                 defaults.synchronize()
                 highScore.string = String(score)
             }
-        
+            
             highScore.visible = true
             highScoreTitle.visible = true
             
@@ -176,30 +253,81 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
             score = score + 10
             
             
-            
-            println("Asteroid killed")
-
             physicsWorld.space.addPostStepBlock({ () -> Void in
                 asteroid.removeFromParent()
-            }, key: asteroid)
+                }, key: asteroid)
         }
         
         return false
     }
     
-    // Asteroid flicked to asteroid death
-    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, asteroidFlicked:Asteroid!, asteroidIncoming:CCNode! ) -> Bool
+    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, asteroid:Asteroid!, shield:CCNode!) -> Bool
     {
-        if asteroidFlicked.isTouched == true
+        if shield.visible == true
         {
-            score = score + 5
+            let zap = CCBReader.load("AsteroidToAsteroidExplosion") as! CCParticleSystem
+            zap.autoRemoveOnFinish = true;
+            zap.position = asteroid.positionInPoints;
+            asteroid.parent.addChild(zap)
             
             physicsWorld.space.addPostStepBlock({ () -> Void in
-                asteroidIncoming.removeFromParent()
-                }, key: asteroidIncoming)
+                asteroid.removeFromParent()
+                }, key: zap)
         }
         
         return false
+    }
+
+    
+    // Asteroid flicked to asteroid death
+    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, asteroid asteroid1:Asteroid!, asteroid asteroid2:Asteroid!) -> Bool
+    {
+        if asteroid1.isTouched == true
+        {
+            score = score + 5
+            let bump = CCBReader.load("AsteroidToAsteroidExplosion") as! CCParticleSystem
+            bump.autoRemoveOnFinish = true;
+            bump.position = asteroid2.positionInPoints;
+            asteroid2.parent.addChild(bump)
+            
+            //Adding gem
+            var gem = CCBReader.load("BlueElement") as! Gem
+            gem.name = "blue"
+            addGem(gem, point: asteroid2.positionInPoints)
+             physicsWorld.space.addPostStepBlock({ () -> Void in
+                asteroid2.removeFromParent()
+                }, key: asteroid1)
+            
+        }
+        
+        if asteroid2.isTouched == true
+        {
+            score = score + 5
+            let bump = CCBReader.load("AsteroidToAsteroidExplosion") as! CCParticleSystem
+            bump.autoRemoveOnFinish = true;
+            bump.position = asteroid1.positionInPoints;
+            asteroid1.parent.addChild(bump)
+            
+            //MARK :- Adding gem
+            var gem = CCBReader.load("GreenElement") as! Gem
+            gem.name = "green"
+            addGem(gem, point: asteroid1.positionInPoints)
+            
+            physicsWorld.space.addPostStepBlock({ () -> Void in
+                asteroid1.removeFromParent()
+                }, key: asteroid2)
+            
+        }
+        
+        
+        return false
+    }
+    
+    //MARK:- Asset Management
+    func addGem(gem: Gem, point: CGPoint) {
+        gem.position = point
+        gem.mainScene = self
+        physicsWorld.addChild(gem)
     }
     
     func removeAsteroid(asteroid:CCNode!)
@@ -212,6 +340,12 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     {
         let gameplayScene = CCBReader.loadAsScene("MainScene")
         CCDirector.sharedDirector().replaceScene(gameplayScene)
+    }
+    
+    func pause()
+    {
+        let gameplayScene = CCBReader.loadAsScene("PauseMenu")
+        CCDirector.sharedDirector().pushScene(gameplayScene)
     }
     
 }

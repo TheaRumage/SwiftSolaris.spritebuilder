@@ -138,7 +138,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	BOOL	_sendCleanupToScene;
 
 	/* scheduled scenes */
-	NSMutableArray *_scenesStack;
 
 	/* last time the main loop was updated */
 	struct timeval _lastUpdate;
@@ -171,6 +170,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 // Undocumented members (considered private)
 @property ( nonatomic, strong ) CCResponderManager* responderManager;
 @property (nonatomic, readwrite, weak) id<CCDirectorDelegate> delegate;
+@property (nonatomic, strong) NSMutableArray *scenesStack;
+
 
 
 /** @name Singleton Accessor */
