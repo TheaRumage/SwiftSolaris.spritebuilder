@@ -10,7 +10,7 @@ import UIKit
 
 class Shield: CCSprite
 {
-
+    
     func didLoadFromCCB()
     {
         visible = false

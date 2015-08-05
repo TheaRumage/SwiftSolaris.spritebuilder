@@ -51,7 +51,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     }
     
     // Asteroid spawn time
-    var interval:Double = 1.0
+    var interval:Double = 2.6
+    var asteroidCount :Int = 100
+    var i: Int = 1
     
     //Lives
     weak var starOne: CCNode!
@@ -73,9 +75,27 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         
         physicsWorld.collisionDelegate = self
         
-        if planet.parent == physicsWorld
+        self.schedule("createNewAsteroidAndPosition", interval: interval)
+        
+        //var music
+        OALSimpleAudio.sharedInstance().playBg("General Lavine.mp3", loop:true)
+    }
+    
+    //MARK:- Astroid spawing intervals
+    func changeInterval()
+    {
+        
+        println(asteroidCount)
+        println(interval)
+        if asteroidCount == 110 && interval >= 0.2
         {
+            asteroidCount -= (10 + (i * 5))
+            interval -= 0.2
+            println("Interval sped up")
+            i++
             self.schedule("createNewAsteroidAndPosition", interval: interval)
+
+
         }
     }
     
@@ -86,7 +106,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         var asteroidX = CCBReader.load("Asteroid") as! Asteroid
         asteroidX.placeAsteroid()
         physicsWorld.addChild(asteroidX)
-        
+        asteroidCount++
     }
     
     
@@ -102,17 +122,16 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
             
         }
         
+        changeInterval()
+        
+        // Blink powerups
         if blueGems == 10
         {
-            blueGems = blueGems - 10
-            shield.activeShield()
-            
+            println("Blinking blue gem")
         }
-        
         if greenGems == 10
         {
-            greenGems = greenGems - 10
-            spawnSpaceShips()
+            println("Blinking green gem")
         }
         
     }
@@ -123,6 +142,22 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         let screenSize = CCDirector.sharedDirector().viewSize()
     }
     
+    func blueGemButton()
+    {
+        for childNode in physicsWorld.children
+        {
+            if childNode is Gem            {
+
+                if blueGems >= 10 && shield.visible == false
+                {
+                    shield.activeShield()
+                    blueGems -= 10
+                }
+            }
+            
+        }
+
+    }
     
     func destroyAsteroids() {
         for childNode in physicsWorld.children
@@ -137,15 +172,6 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
             }
             
         }
-    }
-    
-    func blueGemButton()
-    {
-        if blueGems >= 10
-        {
-            shield.activeShield()
-        }
-
     }
     
     func destroyGems()

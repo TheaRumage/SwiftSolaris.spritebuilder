@@ -27,9 +27,6 @@ class Asteroid: CCSprite
         touchDiff.y *= -1
         var touchDirection: CGPoint = touchDiff
         
-        println("Diff: \(touchDiff)")
-        println("Direction: \(touchDirection)")
-        
         self.physicsBody.applyForce(ccpMult(touchDiff, 500))
     }
     

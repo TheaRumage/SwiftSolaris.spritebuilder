@@ -94,6 +94,8 @@
 		BC5399DB1A44DCC90063F482 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D61A44DCC90063F482 /* JavaFoundation.framework */; };
 		BC5399DC1A44DCC90063F482 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D71A44DCC90063F482 /* JavaKit.framework */; };
 		E32093E21B7028FA00C1BB30 /* Shield.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32093E11B7028FA00C1BB30 /* Shield.swift */; };
+		E36310011B728D0C00339EA6 /* bruyeres.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E36310001B728D0C00339EA6 /* bruyeres.mp3 */; };
+		E36310051B72902B00339EA6 /* General Lavine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E36310041B72902B00339EA6 /* General Lavine.mp3 */; };
 		E3B4CC0A1B57238300705350 /* Asteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B4CC091B57238300705350 /* Asteroid.swift */; };
 		E3C8AEED1B6046CE00DFDF19 /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C8AEEC1B6046CE00DFDF19 /* Stars.swift */; };
 		E3C8AF091B66CC0F00DFDF19 /* PauseMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C8AF081B66CC0F00DFDF19 /* PauseMenu.swift */; };
@@ -220,6 +222,8 @@
 		BC5399D71A44DCC90063F482 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
 		D352B48019EC608A00829775 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MetalShaders; path = Source/MetalShaders; sourceTree = "<group>"; };
 		E32093E11B7028FA00C1BB30 /* Shield.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shield.swift; sourceTree = "<group>"; };
+		E36310001B728D0C00339EA6 /* bruyeres.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bruyeres.mp3; sourceTree = "<group>"; };
+		E36310041B72902B00339EA6 /* General Lavine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "General Lavine.mp3"; sourceTree = "<group>"; };
 		E3B4CC091B57238300705350 /* Asteroid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Asteroid.swift; path = "Source/Game Objects/Asteroid.swift"; sourceTree = "<group>"; };
 		E3C8AEEC1B6046CE00DFDF19 /* Stars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stars.swift; sourceTree = "<group>"; };
 		E3C8AF081B66CC0F00DFDF19 /* PauseMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseMenu.swift; sourceTree = "<group>"; };
@@ -540,6 +544,8 @@
 		B77F1B4617B978D7009739AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E36310001B728D0C00339EA6 /* bruyeres.mp3 */,
+				E36310041B72902B00339EA6 /* General Lavine.mp3 */,
 				7A40366119DDF8C2007B6E8F /* Platforms */,
 				5B12100D197483EE004C1E1D /* res */,
 				B73789911807667A0076A88C /* Icons */,
@@ -759,6 +765,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71F5919188484E7003F4D28 /* Settings.png in Resources */,
+				E36310051B72902B00339EA6 /* General Lavine.mp3 in Resources */,
 				B7378978180762440076A88C /* Default@2x.png in Resources */,
 				B71F5914188484E7003F4D28 /* iPad@2x.png in Resources */,
 				B71F5913188484E7003F4D28 /* iPad.png in Resources */,
@@ -769,6 +776,7 @@
 				B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */,
 				B71F5915188484E7003F4D28 /* iPhone-old.png in Resources */,
 				B71F5917188484E7003F4D28 /* iPhone.png in Resources */,
+				E36310011B728D0C00339EA6 /* bruyeres.mp3 in Resources */,
 				B7378975180762440076A88C /* Default-568h@2x.png in Resources */,
 				B71F5918188484E7003F4D28 /* iPhone@2x.png in Resources */,
 				B7378977180762440076A88C /* Default.png in Resources */,

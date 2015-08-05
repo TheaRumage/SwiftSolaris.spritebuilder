@@ -37,7 +37,7 @@ class Gem: CCSprite
     {
         if name == "blue"
         {
-            mainScene?.blueGems+=5
+            mainScene?.blueGems+=1
         }
         
         if name == "green"
