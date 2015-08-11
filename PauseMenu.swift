@@ -16,6 +16,11 @@ class PauseMenu: CCNode {
         CCDirector.sharedDirector().replaceScene(gameplayScene)
     }
     
+    func credits()
+    {
+        let creditScene = CCBReader.loadAsScene("Credits")
+        CCDirector.sharedDirector().pushScene(creditScene)
+    }
     func resumeMenu()
     {
         CCDirector.sharedDirector().popScene()
@@ -28,7 +33,7 @@ class PauseMenu: CCNode {
         var node: AnyObject = scene.children[0]
         var screenshot = screenShotWithStartNode(node as! CCNode)
         
-        let sharedText = "Checkout my sweet moves! Do you think you can beat my score?: "
+        let sharedText = "Checkout my sweet moves! Do you think you can beat my score? "
         let itemsToShare = [screenshot, sharedText]
         
         var excludedActivities = [ UIActivityTypeAssignToContact,

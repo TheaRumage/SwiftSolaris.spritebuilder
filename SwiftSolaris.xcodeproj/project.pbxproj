@@ -96,6 +96,9 @@
 		E32093E21B7028FA00C1BB30 /* Shield.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32093E11B7028FA00C1BB30 /* Shield.swift */; };
 		E36310011B728D0C00339EA6 /* bruyeres.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E36310001B728D0C00339EA6 /* bruyeres.mp3 */; };
 		E36310051B72902B00339EA6 /* General Lavine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E36310041B72902B00339EA6 /* General Lavine.mp3 */; };
+		E37C036F1B73D6550032E2DF /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C036E1B73D6550032E2DF /* Spaceship.swift */; };
+		E37C03751B740C610032E2DF /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E37C03741B740C610032E2DF /* Media.xcassets */; };
+		E3AF8E8C1B79840900EBA0BE /* Credits.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3AF8E8B1B79840900EBA0BE /* Credits.swift */; };
 		E3B4CC0A1B57238300705350 /* Asteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B4CC091B57238300705350 /* Asteroid.swift */; };
 		E3C8AEED1B6046CE00DFDF19 /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C8AEEC1B6046CE00DFDF19 /* Stars.swift */; };
 		E3C8AF091B66CC0F00DFDF19 /* PauseMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C8AF081B66CC0F00DFDF19 /* PauseMenu.swift */; };
@@ -224,6 +227,9 @@
 		E32093E11B7028FA00C1BB30 /* Shield.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shield.swift; sourceTree = "<group>"; };
 		E36310001B728D0C00339EA6 /* bruyeres.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bruyeres.mp3; sourceTree = "<group>"; };
 		E36310041B72902B00339EA6 /* General Lavine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "General Lavine.mp3"; sourceTree = "<group>"; };
+		E37C036E1B73D6550032E2DF /* Spaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
+		E37C03741B740C610032E2DF /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		E3AF8E8B1B79840900EBA0BE /* Credits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credits.swift; sourceTree = "<group>"; };
 		E3B4CC091B57238300705350 /* Asteroid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Asteroid.swift; path = "Source/Game Objects/Asteroid.swift"; sourceTree = "<group>"; };
 		E3C8AEEC1B6046CE00DFDF19 /* Stars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stars.swift; sourceTree = "<group>"; };
 		E3C8AF081B66CC0F00DFDF19 /* PauseMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseMenu.swift; sourceTree = "<group>"; };
@@ -457,12 +463,14 @@
 				E3B4CC081B57238300705350 /* Game Objects */,
 				7A40362019DDEF0D007B6E8F /* Platforms */,
 				7A046D7519E84C36004C4763 /* MainScene.swift */,
+				E37C036E1B73D6550032E2DF /* Spaceship.swift */,
 				E3D483DF1B6C333600205EEB /* StartScene.swift */,
 				E3C8AF0A1B67F42E00DFDF19 /* IceAsteroid.swift */,
 				E32093E11B7028FA00C1BB30 /* Shield.swift */,
 				E3C8AF0E1B68066800DFDF19 /* Extensions.swift */,
 				E3C8AF0C1B67F44100DFDF19 /* Gem.swift */,
 				E3C8AF081B66CC0F00DFDF19 /* PauseMenu.swift */,
+				E3AF8E8B1B79840900EBA0BE /* Credits.swift */,
 				E3B4CC091B57238300705350 /* Asteroid.swift */,
 				E3C8AEEC1B6046CE00DFDF19 /* Stars.swift */,
 				D352B48019EC608A00829775 /* MetalShaders */,
@@ -551,6 +559,7 @@
 				B73789911807667A0076A88C /* Icons */,
 				B737893A180761570076A88C /* Published-iOS */,
 				B78A0B0F198AF87200C63841 /* Published-Android */,
+				E37C03741B740C610032E2DF /* Media.xcassets */,
 			);
 			name = Resources;
 			path = Source/Resources;
@@ -780,6 +789,7 @@
 				B7378975180762440076A88C /* Default-568h@2x.png in Resources */,
 				B71F5918188484E7003F4D28 /* iPhone@2x.png in Resources */,
 				B7378977180762440076A88C /* Default.png in Resources */,
+				E37C03751B740C610032E2DF /* Media.xcassets in Resources */,
 				B71F5911188484E7003F4D28 /* iPad-old.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -857,9 +867,11 @@
 				E3B4CC0A1B57238300705350 /* Asteroid.swift in Sources */,
 				E3C8AF0F1B68066800DFDF19 /* Extensions.swift in Sources */,
 				E3C8AEED1B6046CE00DFDF19 /* Stars.swift in Sources */,
+				E3AF8E8C1B79840900EBA0BE /* Credits.swift in Sources */,
 				E3D483E01B6C333600205EEB /* StartScene.swift in Sources */,
 				E32093E21B7028FA00C1BB30 /* Shield.swift in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
+				E37C036F1B73D6550032E2DF /* Spaceship.swift in Sources */,
 				E3C8AF0B1B67F42E00DFDF19 /* IceAsteroid.swift in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
 				E3C8AF0D1B67F44100DFDF19 /* Gem.swift in Sources */,
@@ -1145,6 +1157,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1180,6 +1193,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

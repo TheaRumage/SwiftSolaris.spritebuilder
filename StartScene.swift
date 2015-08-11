@@ -22,8 +22,6 @@ class StartScene: CCScene {
         
         introStarted = true
         
-        //var actionScale = CCActionScaleTo(duration: 1.5, scale: 3.25)
-        
         var actionBlock = CCActionCallBlock {
             [unowned self] () -> Void in
             

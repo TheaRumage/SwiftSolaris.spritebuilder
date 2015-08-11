@@ -62,7 +62,7 @@
 			<key>collisionType</key>
 			<string>asteroid</string>
 			<key>cornerRadius</key>
-			<real>22.89390754699707</real>
+			<real>24.870525360107422</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
@@ -74,8 +74,8 @@
 			<key>points</key>
 			<array>
 				<array>
-					<real>28.5</real>
-					<real>29</real>
+					<real>25.222625732421875</real>
+					<real>20.999984741210938</real>
 				</array>
 			</array>
 			<key>polygons</key>
@@ -137,7 +137,7 @@
 				<key>value</key>
 				<array>
 					<string></string>
-					<string>Solar pics/Astroid.png</string>
+					<string>Solar pics/AsteroidSketch.png</string>
 				</array>
 			</dict>
 			<dict>
@@ -158,8 +158,8 @@
 				<string>Color3</string>
 				<key>value</key>
 				<array>
-					<real>1</real>
-					<real>1</real>
+					<real>0.97704142332077026</real>
+					<real>0.96439802646636963</real>
 					<real>1</real>
 					<real>1</real>
 				</array>

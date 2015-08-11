@@ -26,6 +26,12 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     // Planet shield
     weak var shield:Shield!
     
+    // Graphics for gems
+    weak var blueGemGraphic: CCNode!
+    weak var greenGemGraphic: CCNode!
+    weak var pressMeBlue: CCLabelTTF!
+    var firstPressBlue:Int = 0
+    
     var blueGems:Int = 0
     {
         didSet
@@ -51,7 +57,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     }
     
     // Asteroid spawn time
-    var interval:Double = 2.6
+    var interval:Double = 1.4
     var asteroidCount :Int = 100
     var i: Int = 1
     
@@ -59,6 +65,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
     weak var starOne: CCNode!
     weak var starTwo: CCNode!
     weak var starThree:CCNode!
+    weak var starFour: CCNode!
+    weak var starFive: CCNode!
+    var starCount: Int = 5
     
     var asteroidCollision: Int = 0
     
@@ -87,9 +96,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         
         println(asteroidCount)
         println(interval)
-        if asteroidCount == 110 && interval >= 0.2
+        if asteroidCount == 110 && interval >= 0.8
         {
-            asteroidCount -= (10 + (i * 5))
+            asteroidCount -= (10 + (i * 10))
             interval -= 0.2
             println("Interval sped up")
             i++
@@ -98,7 +107,6 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
 
         }
     }
-    
     
     
     func createNewAsteroidAndPosition()
@@ -121,37 +129,31 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
             }
             
         }
-        
+        greenGemButton()
         changeInterval()
-        
-        // Blink powerups
-        if blueGems == 10
-        {
-            println("Blinking blue gem")
-        }
-        if greenGems == 10
-        {
-            println("Blinking green gem")
-        }
-        
-    }
-    // MARK:- Powerups
-    func spawnSpaceShips()
-    {
-        let spaceship = CCBReader.load("Spaceship")
-        let screenSize = CCDirector.sharedDirector().viewSize()
+    
+        // Powerup press me labels
+        if blueGems == 5 && firstPressBlue == 0
+            {
+                pressMeBlue.visible = true
+                firstPressBlue++
+            }
     }
     
+    
+    // MARK:- Powerups
     func blueGemButton()
     {
         for childNode in physicsWorld.children
         {
-            if childNode is Gem            {
+            if childNode is Gem
+            {
 
-                if blueGems >= 10 && shield.visible == false
+                if blueGems >= 5 && shield.visible == false
                 {
                     shield.activeShield()
-                    blueGems -= 10
+                    pressMeBlue.visible = false
+                    blueGems -= 5
                 }
             }
             
@@ -159,6 +161,65 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
 
     }
     
+    func greenGemButton()
+    {
+        for childNode in physicsWorld.children
+        {
+            if childNode is Gem
+            {
+                
+                if greenGems - 10 >= 0 && starCount < 5
+                {
+                    let starRenew = CCBReader.load("StarRespawn") as! CCParticleSystem
+ 
+                    if starFour.visible == false
+                    {
+                        starRenew.autoRemoveOnFinish = true;
+                        starRenew.position = starFour.positionInPoints;
+                        starFour.parent.addChild(starRenew)
+                        starFour.visible = true
+                        starCount++
+                        asteroidCollision--
+                    }
+                    else if starThree.visible == false
+                    {
+                        starRenew.autoRemoveOnFinish = true;
+                        starRenew.position = starThree.positionInPoints;
+                        starThree.parent.addChild(starRenew)
+                        starThree.visible = true
+                        starCount++
+                        asteroidCollision--
+                    }
+                    
+                    else if starTwo.visible == false
+                    {
+                        starRenew.autoRemoveOnFinish = true;
+                        starRenew.position = starTwo.positionInPoints;
+                        starTwo.parent.addChild(starRenew)
+                        starTwo.visible = true
+                        starCount++
+                        asteroidCollision--
+                    }
+                    
+                    else
+                    {
+                        starRenew.autoRemoveOnFinish = true;
+                        starRenew.position = starOne.positionInPoints;
+                        starOne.parent.addChild(starRenew)
+                        starOne.visible = true
+                        starCount++
+                        asteroidCollision--
+                    }
+                    
+                    greenGems -= 10
+                }
+            }
+            
+        }
+        
+    }
+
+    // MARK:- Destroying objects
     func destroyAsteroids() {
         for childNode in physicsWorld.children
         {
@@ -213,7 +274,8 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         {
             if starOne != nil
             {
-                starOne.removeFromParent()
+                starOne.visible = false
+                starCount--
             }
         }
         
@@ -221,18 +283,42 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         {
             if starTwo != nil
             {
-                starTwo.removeFromParent()
+                starTwo.visible = false
+                starCount--
             }
             
         }
         
         if asteroidCollision == 3
         {
-            self.unschedule("createNewAsteroidAndPosition")
             
             if starThree != nil
             {
-                starThree.removeFromParent()
+                starThree.visible = false
+                starCount--
+            }
+            
+        }
+        
+        if asteroidCollision == 4
+        {
+            
+            if starThree != nil
+            {
+                starFour.visible = false
+                starCount--
+            }
+            
+        }
+        
+        if asteroidCollision == 5
+        {
+            self.unschedule("createNewAsteroidAndPosition")
+            
+            if starFive != nil
+            {
+                starFive.visible = false
+                starCount--
             }
             
             let explosion = CCBReader.load("PlanetExplosion") as! CCParticleSystem
@@ -277,8 +363,6 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate
         if asteroid.isTouched == true
         {
             score = score + 10
-            
-            
             physicsWorld.space.addPostStepBlock({ () -> Void in
                 asteroid.removeFromParent()
                 }, key: asteroid)

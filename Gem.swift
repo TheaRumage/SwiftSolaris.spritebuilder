@@ -51,12 +51,20 @@ class Gem: CCSprite
     
     func timerForRemoveGem()
     {
-        var actionDelay = CCActionDelay(duration: 10)
+        var actionDelay = CCActionDelay(duration: 8)
         
         var actionBlock = CCActionCallBlock {
             [unowned self] () -> Void in
             self.removeFromParent()
         }
-        self.runAction(CCActionSequence(array: [actionDelay,actionBlock]))
+        //self.runAction(CCActionSequence(array: [actionDelay,actionBlock]))
+        
+        var actionScaleOut = CCActionScaleTo(duration: 0.25, scale: 1.25)
+        var actionScaleIn = CCActionScaleTo(duration: 0.25, scale: 1.00)
+        var actionSequence = CCActionSequence(array: [actionScaleOut,actionScaleIn])
+        var actionRepeat = CCActionRepeatForever(action: actionSequence)
+        
+        self.runAction(actionRepeat)
+
     }
 }
